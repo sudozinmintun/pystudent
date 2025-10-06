@@ -10,7 +10,9 @@ d = a + b * c
 #     return d
 
 # print(dis.dis(func))
-print("globals:", globals()) # Call globals to see all global variables
+
+# print("globals:", globals())
+ # Call globals to see all global variables
 
 executed_stack = []
 
