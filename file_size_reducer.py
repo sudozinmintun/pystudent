@@ -2,30 +2,33 @@ import os
 from PIL import Image
 
 # Input and output folders
-input_folder = "/home/"
-output_folder = "/home/"
+input_folder = "/home/zion/Desktop/reho"
+output_folder = "/home/zion/Desktop/reho/OutputData"
 
 # Create output folder if not exists
 os.makedirs(output_folder, exist_ok=True)
 
-# JPEG compression quality (adjust: 40–60 = smaller size, lower quality)
-JPEG_QUALITY = 60  
+# JPEG compression quality
+JPEG_QUALITY = 40  # 35–50 gives smaller but still clean
+MAX_WIDTH = 1200   # resize large photos to 1200px wide
 
 for filename in os.listdir(input_folder):
     if filename.lower().endswith((".jpg", ".jpeg", ".png")):
         file_path = os.path.join(input_folder, filename)
-        img = Image.open(file_path)
+        img = Image.open(file_path).convert("RGB")
 
-        # Default output path keeps the same extension
-        output_path = os.path.join(output_folder, filename)
+        # Resize large images
+        width, height = img.size
+        if width > MAX_WIDTH:
+            ratio = MAX_WIDTH / width
+            new_size = (MAX_WIDTH, int(height * ratio))
+            img = img.resize(new_size, Image.LANCZOS)
 
-        if filename.lower().endswith((".jpg", ".jpeg", ".png")):
-            # Compress JPEG
-            img.save(output_path, "JPEG", optimize=True, quality=JPEG_QUALITY)
-        
-        elif filename.lower().endswith(".png"):
-            # Compress PNG (optimize only, keep alpha channel)
-            img.save(output_path, "PNG", optimize=True)
+        # Save as compressed JPEG (smaller & still good quality)
+        output_filename = os.path.splitext(filename)[0] + ".jpg"
+        output_path = os.path.join(output_folder, output_filename)
+
+        img.save(output_path, "JPEG", optimize=True, quality=JPEG_QUALITY, progressive=True)
 
         # Print before and after size
         before_size = os.path.getsize(file_path) / 1024  # KB

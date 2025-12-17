@@ -7,6 +7,7 @@ xml_string = """<message>
         </body>
     </message>
 """
+
 stack = []
 valid = True
 lines = xml_string.splitlines()

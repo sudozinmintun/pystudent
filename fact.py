@@ -11,11 +11,15 @@
 #         = 2 * fact(1)
             # = 1
 
+
 def fact(n):
     if n == 1: #base case
         return 1
     else:
         return n * fact(n - 1)
+
+
+
     
 # print("3 ! => ", fact(3))
 print("3 ! => ", fact(9999))

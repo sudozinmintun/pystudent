@@ -31,4 +31,3 @@ fruits_repeated = fruits * 3
 print("Fruits repeated ", fruits_repeated)
 print("Fruits repeated len", len(fruits_repeated))
 print("Fruits repeated count(Apple)", fruits_repeated.count("Apple"))
-
